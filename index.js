@@ -2,6 +2,7 @@ const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const fs = require('fs');
 const https = require('https');
+const http = require('http');
 
 // Задаем API ключ для телеграмм бота и API ключ для сайта search4faces.com
 const telegramBotToken = '6044787090:AAHp51UHwLBdAgg3erIgCuG0sJB-HaQgQdU';
@@ -9,6 +10,43 @@ const search4facesToken = 'fbce9c-fa1595-d24af2-e6333c-87067a';
 
 // Создаем экземпляр телеграмм бота
 const bot = new TelegramBot(telegramBotToken, {polling: true});
+
+
+
+
+const Prometheus = require('prom-client');
+const register = Prometheus.register;
+
+// Создание счетчика метрики для обработанных фотографий
+const processedPhotosCounter = new Prometheus.Counter({
+    name: 'telegram_bot_processed_photos_total',
+    help: 'Total number of processed photos',
+    labelNames: ['chat_id'],
+});
+
+
+// Регистрация метрик в реестре
+register.registerMetric(processedPhotosCounter);
+
+// HTTP-обработчик для предоставления метрик Prometheus
+http.createServer(async (req, res) => {
+    if (req.url === '/metrics') {
+        res.setHeader('Content-Type', register.contentType);
+        res.end(await register.metrics());
+    } else {
+        res.statusCode = 404;
+        res.end('Not Found');
+    }
+}).listen(8080, () => {
+    console.log('HTTP server is running on port 8080');
+});
+
+
+
+
+
+
+
 
 // Обработчик команды /start
 bot.onText(/\/start/, (msg) => {
@@ -93,6 +131,16 @@ bot.on('photo', async (msg) => {
                             // Если на изображении не обнаружены лица, отправляем сообщение об ошибке
                             await bot.sendMessage(chatId, 'На изображении не обнаружены лица.');
                         }
+
+
+
+
+                        processedPhotosCounter.inc({ chat_id: chatId });
+
+
+
+
+
                         // helloTest = base64Image
                         fs.unlink(fileName, () => {
                             // helloTest = base64Image
@@ -102,5 +150,5 @@ bot.on('photo', async (msg) => {
                 });
             });
         })
-
 });
+
