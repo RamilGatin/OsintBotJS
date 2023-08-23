@@ -5,7 +5,7 @@ ___
 ### Описание Бота
 Это бот, который по загруженной Вами фотографии лица человека помогает найти его профиль в социальной сети Вконтакте.
 
-Пример работы бота: ![image](https://github.com/RamilGatin/OsintBotJS/assets/79932308/42971275-333c-4872-ae3f-ee115097f0fd)
+Пример работы бота: ![image](https://github.com/RamilGatin/OsintBotJS/blob/master/screenshot%201.png)
 
 ---
 
@@ -72,7 +72,7 @@ http.createServer(async (req, res) => {
 
 ### Графики в Grafana
 
-Пример отображения метрики (количество отправленных фотографий пользователями) ![image](https://github.com/RamilGatin/OsintBotJS/assets/79932308/21a5077a-43ad-48e2-bda7-ed2aac8c9b69)
+Пример отображения метрики (количество отправленных фотографий пользователями) ![image](https://github.com/RamilGatin/OsintBotJS/blob/master/screenshot%202.png)
 
 
 ## Инструкция по разворачиванию мониторинг стенда:
