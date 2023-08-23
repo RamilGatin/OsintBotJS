@@ -5,8 +5,8 @@ const https = require('https');
 const http = require('http');
 
 // Задаем API ключ для телеграмм бота и API ключ для сайта search4faces.com
-const telegramBotToken = '6044787090:AAHp51UHwLBdAgg3erIgCuG0sJB-HaQgQdU';
-const search4facesToken = 'fbce9c-fa1595-d24af2-e6333c-87067a';
+const telegramBotToken = *************;
+const search4facesToken = ************;
 
 // Создаем экземпляр телеграмм бота
 const bot = new TelegramBot(telegramBotToken, {polling: true});
